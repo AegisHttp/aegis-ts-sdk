@@ -1,7 +1,7 @@
 # Aegis Http SDK
 
-![Version](https://img.shields.io/npm/v/aegis-http-sdk)
-![License](https://img.shields.io/npm/l/aegis-http-sdk)
+![Version](https://img.shields.io/npm/v/aegis-ts-sdk)
+![License](https://img.shields.io/npm/l/aegis-ts-sdk)
 
 The **Aegis Http SDK** is the official JavaScript/TypeScript client library for the [Aegis Http Zero Trust ecosystem](https://github.com/AegisHttp). It enables web applications (Vanilla JS, Vue, React, Angular, etc.) to securely negotiate end-to-end (E2E) PGP encryption with any Aegis Http-compliant Caddy/GoFiber/Laravel backend, **seamlessly**.
 
@@ -28,38 +28,40 @@ import "aegis-http-sdk";
 window.aegis.init();
 
 // 2. Wrap your login button logic
-document.getElementById('login-btn').addEventListener('click', async () => {
-    try {
-        // Automatically triggers the Browser Extension to sign the Server's Challenge securely using OS Keyring
-        const userEmail = await window.aegis.login();
-        console.log("Zero Trust authentication successful for: " + userEmail);
-    } catch (error) {
-        console.error("GPG Handshake failed:", error);
-    }
+document.getElementById("login-btn").addEventListener("click", async () => {
+  try {
+    // Automatically triggers the Browser Extension to sign the Server's Challenge securely using OS Keyring
+    const userEmail = await window.aegis.login();
+    console.log("Zero Trust authentication successful for: " + userEmail);
+  } catch (error) {
+    console.error("GPG Handshake failed:", error);
+  }
 });
 ```
 
-*(If the user does not have the browser extension installed, `.login()` will gracefully throw an error and present a minimalist, built-in dialog guiding them to the extension stores).*
+_(If the user does not have the browser extension installed, `.login()` will gracefully throw an error and present a minimalist, built-in dialog guiding them to the extension stores)._
 
 ## 🔌 Transparent Tunneling (Zero-Metadata)
 
-By default, the Aegis architecture only encrypts `POST/PUT` payloads. 
+By default, the Aegis architecture only encrypts `POST/PUT` payloads.
 If your backend routing architecture supports full **transparent tunneling** (e.g. using the Aegis Http Caddy Module), you can force all your web application's requests—including `GET/DELETE/OPTIONS`, parameters, and HTTP Headers like `Authorization`—to be completely encrypted into a singular opaque HTTP envelope.
 
 ```javascript
 // Force all URLs, Methods, and Headers to be encrypted into POST bodies
 window.aegis.init({ forceTunneling: true });
 ```
+
 Once `forceTunneling` is enabled, the browser extension will intercept all standard network requests on the page, encrypting their full metadata. Neither proxies nor middle-boxes will be able to parse your REST endpoints (`?id=X`) or tokens.
 
 ## ⚙️ Advanced Configuration
+
 If your backend exposes the authentication challenge/login verification at non-standard endpoints, you can safely remap them:
 
 ```javascript
 window.aegis.init({
-    challengeUrl: "/api/secret-challenge", // Default: /api/challenge
-    loginUrl: "/api/verify-signature",     // Default: /api/login
-    forceTunneling: false                  // Default: false
+  challengeUrl: "/api/secret-challenge", // Default: /api/challenge
+  loginUrl: "/api/verify-signature", // Default: /api/login
+  forceTunneling: false, // Default: false
 });
 ```
 
@@ -80,9 +82,11 @@ We provide plug-and-play middleware and reverse proxy modules for various infras
 👉 **[github.com/aegishttp](https://github.com/aegishttp)**
 
 Supported Backend Architectures:
-- **Caddy Web Server Module** *(Use Aegis in front of any Node.js, Python, or Ruby backend instantly)*
-- **GoFiber Middleware** *(High-performance native Go implementation)*
-- **Laravel Middleware** *(Native PHP implementation)*
+
+- **Caddy Web Server Module** _(Use Aegis in front of any Node.js, Python, or Ruby backend instantly)_
+- **GoFiber Middleware** _(High-performance native Go implementation)_
+- **Laravel Middleware** _(Native PHP implementation)_
 
 ## ⚖️ License
+
 Licensed under **AGPL-3.0**. Read the main repository for comprehensive deployment topologies and security vulnerability mitigations.
