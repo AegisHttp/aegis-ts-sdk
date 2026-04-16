@@ -1,0 +1,40 @@
+{
+  "name": "aegis-http-sdk",
+  "version": "0.1.0",
+  "description": "Aegis Http is an autonomous, End-to-End Encrypted (E2E) HTTP gateway architecture built on top of standard GPG (GNU Privacy Guard). ",
+  "keywords": [
+    "aegis-http",
+    "sdk",
+    "aegis-http-sdk",
+    "gpg",
+    "gnupg",
+    "openpgp"
+  ],
+  "homepage": "https://github.com/AegisHttp/aegis-ts-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/AegisHttp/aegis-ts-sdk/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AegisHttp/aegis-ts-sdk.git"
+  },
+  "license": "AGPL-3.0-only",
+  "author": "Can US <me@canus.dev>",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "ts-jest": "^29.4.9",
+    "typescript": "^6.0.2"
+  }
+}
