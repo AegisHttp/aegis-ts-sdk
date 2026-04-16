@@ -1,6 +1,6 @@
 {
   "name": "aegis-ts-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Aegis Http is an autonomous, End-to-End Encrypted (E2E) HTTP gateway architecture built on top of standard GPG (GNU Privacy Guard). ",
   "keywords": [
     "aegis-http",
