@@ -5,6 +5,7 @@ interface AegisConfig {
 }
 
 class AegisHttpSDK {
+    public initialized = false;
     private config: AegisConfig = {
         challengeUrl: "/api/challenge",
         loginUrl: "/api/login",
@@ -14,6 +15,7 @@ class AegisHttpSDK {
      * Initializes the SDK with custom configuration or force tunneling mode.
      */
     init(config?: AegisConfig) {
+        this.initialized = true;
         this.config = { ...this.config, ...config };
         
         if (this.config.forceTunneling) {
@@ -142,7 +144,7 @@ class AegisHttpSDK {
 
         const installBtn = document.createElement("a");
         installBtn.innerText = "Install Extension";
-        installBtn.href = "https://github.com/AegisHttp/AegisHttp"; // Replace with your actual webstore URL later
+        installBtn.href = "https://github.com/AegisHttp/chrome-extension"; // Replace with your actual webstore URL later
         installBtn.target = "_blank";
         installBtn.style.padding = "10px 20px";
         installBtn.style.border = "none";
