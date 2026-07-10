@@ -40,9 +40,10 @@ class AegisHttpSDK {
 
     /**
      * Initiates the login process using Aegis Http GPG Extension.
+     * @param email Optional email to directly login with a specific GPG key bypassing the selector
      * @returns The authenticated email address on success
      */
-    async login(): Promise<string> {
+    async login(email?: string): Promise<string> {
         // 1. Check if extension natively provides window.gpgLogin
         if (typeof (window as any).gpgLogin !== "function") {
             this.showInstallDialog();
@@ -62,8 +63,8 @@ class AegisHttpSDK {
         const data = await challengeRes.json();
         const challenge = data.challenge;
 
-        // 3. Request native extension to sign the challenge
-        const loginResult = await (window as any).gpgLogin(challenge);
+        // 3. Request native extension to sign the challenge (passing optional email)
+        const loginResult = await (window as any).gpgLogin(challenge, email);
         
         // 4. Send the signed payload back to backend
         const loginRes = await fetch(this.config.loginUrl!, {
@@ -185,8 +186,13 @@ class AegisHttpSDK {
         step1Title.style.fontSize = "0.95rem";
         step1Title.style.marginBottom = "8px";
 
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isFirefox = userAgent.indexOf("firefox") !== -1;
+
         const extLink = document.createElement("a");
-        extLink.href = "https://chromewebstore.google.com/detail/lappbcambkogfmigiphapgjcglafcfnd";
+        extLink.href = isFirefox 
+            ? "https://github.com/AegisHttp/firefox-extension" 
+            : "https://chromewebstore.google.com/detail/lappbcambkogfmigiphapgjcglafcfnd";
         extLink.target = "_blank";
         extLink.style.display = "inline-flex";
         extLink.style.alignItems = "center";
@@ -199,7 +205,7 @@ class AegisHttpSDK {
         extLink.style.fontSize = "0.85rem";
         extLink.style.fontWeight = "500";
         extLink.style.marginBottom = "20px";
-        extLink.innerText = "Add to Chrome";
+        extLink.innerText = isFirefox ? "Add to Firefox" : "Add to Chrome";
         
         // Step 2: Native Daemon
         const step2Title = document.createElement("div");
